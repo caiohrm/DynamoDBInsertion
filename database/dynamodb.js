@@ -1,31 +1,16 @@
 'use strict'
 
 var AWS = require("aws-sdk");
+const rest = require('./rest');
 
-const rest = require('../rest');
-var options = {}
-// connect to local DB if running offline
-if (true) {
-    options = {
-        region: 'localhost',
-        endpoint: 'http://localhost:8080',
-    };
-} else {
-    options = {
-        region: "sa-east-1" // Indicate the regions of your AWS server
-    }
-}
 
-var docClient = new AWS.DynamoDB.DocumentClient(options);
+var docClient = new AWS.DynamoDB.DocumentClient({
+    region: "sa-east-1" // Indicate the regions of your AWS server
+});
 
-var params = {
-    TableName: "Ola", //Table name of DynamoDB tha you want to manipulate
-    Item: {
-        Name: "TESTE" // Item that you want to insert in to DynamoDb
-    }
-};
 
-module.exports.PutItem = () => {
+module.exports.PutItem = (params) => {
+    console.log(params);
     return new Promise((resolve, reject) => {
         docClient.put(params, function (err, data) {
             if (err) {
@@ -33,10 +18,67 @@ module.exports.PutItem = () => {
                 reject(err);
             }
             console.log("Success", data);
-            const response = rest.response(200, dbParams.Item, endpoint);
+            const response = rest.response(200, data, endpoint);
             resolve(response);
 
         });
     });
 
+}
+
+module.exports.Delete = (deleteItem) => {
+    return new Promise((res, rej) => {
+        docClient.delete(deleteItem, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+                rej(err);
+            } else {
+                console.log("Success", data);
+                res(data);
+            }
+        });
+    });
+}
+
+module.exports.GetItem = (getItem) => {
+    return new Promise((res, rej) => {
+        docClient.get(getItem, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+                rej(err);
+            } else {
+                console.log("Success", data);
+                res(data);
+            }
+        });
+    });
+}
+
+module.exports.Update = (updateItem) => {
+    let update = {
+        TableName: "",
+        Key: {
+            Name: updateItem.Keys
+        },
+        UpdateExpression: "set sobrenome = :r",
+        ExpressionAttributeValues: {
+            ":r": "Caio"
+        },
+        ReturnValues: "UPDATED_NEW"
+    }
+    update.TableName = updateItem.TableName;
+    update.Key.Name = updateItem.Keys
+    console.log(update);
+    
+    return new Promise((res, rej) => {
+        docClient.update(update, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+                rej(err);
+            } else {
+                console.log("Success", data);
+                res(data);
+            }
+        });
+    });
 }

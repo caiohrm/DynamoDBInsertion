@@ -71,9 +71,14 @@ functions:
       handler: handler.recuperar
       events:
         - http:
-            path: /users
+            path: /users/{table}/{id}
             method: get
-  hello:
+            request:
+              parameters:
+                paths:
+                  id: true
+                  table: true
+  insert:
     handler: handler.insert
     events:
       - http:
