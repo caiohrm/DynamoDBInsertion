@@ -12,6 +12,18 @@
 # Happy Coding!
 
 service: aws-nodejs # NOTE: update this with your service name
+plugins:
+  # - serverless-dynamodb-local #  DYNAMODB plugin
+  # - serverless-offline-scheduler # SCHEDULING plugin
+  - serverless-offline
+
+  # exclude the code coverage files, examples and circle ci files
+package:
+  exclude:
+  - coverage/**
+  - .circleci/**
+  - examples/**
+
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -62,7 +74,7 @@ functions:
             path: /users
             method: get
   hello:
-    handler: handler.hello
+    handler: handler.insert
     events:
       - http:
          path: /users

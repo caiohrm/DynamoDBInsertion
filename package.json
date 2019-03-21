@@ -1,0 +1,43 @@
+{
+  "name": "optinoptout",
+  "version": "0.0.1",
+  "description": "Crud with DynamoDb",
+  "repository": "https://github.com/caiohrm/DynamoDBInsertion",
+  "main": "handler.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.224.1"
+  },
+  "devDependencies": {
+    "dotenv": "^5.0.1",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "jest": "^24.5.0",
+    "jsdoc": "^3.5.5",
+    "serverless-dynamodb-local": "^1.0.2",
+    "serverless-offline": "^3.33.0",
+    "serverless-offline-scheduler": "^0.3.4"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "html",
+      "text"
+    ]
+  },
+  "lint-staged": "eslint `git diff --staged --diff-filter=AM --name-only | grep .js$ | tr '\n' ' '`",
+  "author": "BeApplied <tech@beapplied.com>",
+  "bugs": {
+    "url": "https://github.com/beapplied/serverless-starter/issues"
+  },
+  "homepage": "https://github.com/beapplied/serverless-starter#readme"
+}

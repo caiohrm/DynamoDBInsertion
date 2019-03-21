@@ -14,7 +14,9 @@ var params = {
   }
 };
 
-module.exports.hello = async (event, context, callback) => {
+
+
+module.exports.insert = async (event, context, callback) => {
   let putItem = new Promise((res, rej) => {
     docClient.put(params, function (err, data) {
       if (err) {
@@ -26,7 +28,7 @@ module.exports.hello = async (event, context, callback) => {
       }
     });
   });
-  await putItem.then((value) => {
+  putItem.then((value) => {
     Success(value, callback);
   }).catch((ex) => {
     Erro(ex, callback);
@@ -47,7 +49,7 @@ module.exports.recuperar = async (event, context, callback) => {
         console.log("Error", err);
         rej(err);
       } else {
-        console.log("Success", data);
+        // console.log("Success", data);
         res(data);
       }
     });
@@ -121,7 +123,7 @@ module.exports.delete = async (event, context, callback) => {
 
 
 var Success = (value, callback) => {
-  console.log(value);
+  // console.log(value);
   var response = {
     "statusCode": 200,
     "body": JSON.stringify(value),
@@ -132,10 +134,7 @@ var Success = (value, callback) => {
 
 
 var Erro = (value, callback) => {
-  console.log("CAIO");
-
-  console.log(value);
-
+  // console.log("CAIO");
   var response = {
     "statusCode": 400,
     "body": JSON.stringify(value),
