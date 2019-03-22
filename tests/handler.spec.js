@@ -43,6 +43,6 @@ describe('TDD CRUD operations with DynamoDB', () => {
             expect(resp.statusCode).toBe(200)
             done();
         };
-        update(event,context,callback)
+        deletar(event,context,callback)
     });
 });
